@@ -1,7 +1,7 @@
 # Quickly lookup any file on VirusTotal using right-click context menu
 
 ## Preview:
-![Preview](https://im7.ezgif.com/tmp/ezgif-7-d04346e46c.gif)
+![Preview](demos/demo.gif)
 
 ## Requirements:
 * Python 3
