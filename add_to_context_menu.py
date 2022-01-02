@@ -40,5 +40,5 @@ key_path = r"HKEY_CURRENT_USER\SOFTWARE\Classes\*\shell\VTScan"
 python_exe = sys.executable
 
 define_action_on(
-    "*", "Check reputation on VirusTotal", f"{python_exe} {app_path} -f %1"
+    "*", "Check reputation on VirusTotal", f'{python_exe} {app_path} -f "%1"'
 )
