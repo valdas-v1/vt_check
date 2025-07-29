@@ -15,7 +15,7 @@ if (-not (Test-Path $checkScript)) {
 
 # Create the VBScript wrapper for silent execution
 $vbsContent = @"
-CreateObject("Wscript.Shell").Run "powershell.exe -NoProfile -ExecutionPolicy Bypass -File """ & Replace(WScript.ScriptFullName, "run-silent.vbs", "Check-VirusTotal.ps1") & """ -FilePath """ & WScript.Arguments(0) & """", 0, False
+CreateObject("Wscript.Shell").Run "powershell.exe -NoProfile -ExecutionPolicy Bypass -File """ & "$checkScript" & """ -FilePath """ & WScript.Arguments(0) & """", 0, False
 "@
 
 Set-Content -Path $vbsScript -Value $vbsContent -Encoding ASCII
@@ -30,8 +30,9 @@ try {
     New-Item -Path $commandPath -Force | Out-Null
     
     # Set the display name and command
+    $magnifyingGlassIcon = "shell32.dll,22"  # Magnifying glass icon from shell32.dll
     & reg add "HKCU\Software\Classes\*\shell\VirusTotalCheck" /ve /d "Check on VirusTotal" /f | Out-Null
-    & reg add "HKCU\Software\Classes\*\shell\VirusTotalCheck" /v "Icon" /d "shell32.dll,22" /f | Out-Null
+    & reg add "HKCU\Software\Classes\*\shell\VirusTotalCheck" /v "Icon" /d $magnifyingGlassIcon /f | Out-Null
     $command = "wscript.exe `"$vbsScript`" `"%1`""
     & reg add "HKCU\Software\Classes\*\shell\VirusTotalCheck\command" /ve /d $command /f | Out-Null
     
